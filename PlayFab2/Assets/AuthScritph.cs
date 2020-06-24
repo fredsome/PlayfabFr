@@ -14,8 +14,12 @@ public class AuthScritph : MonoBehaviour
     // Start is called before the first frame update
 
     InputField ifEmail, ifPassword, ifDisplayName;
+  
+    [SerializeField]
+    PlayFabManager playfabManager;
     public void RegisterPlayer()
     {
+        playfabManager.LoadingMessage("Connection en cour....");
         var request = new RegisterPlayFabUserRequest() {
             Email = ifEmail.text,
             Password =ifPassword.text,
@@ -30,18 +34,42 @@ public class AuthScritph : MonoBehaviour
 
     private void Failed(PlayFabError err)
     {
-        Debug.Log(err.ErrorMessage);
+        playfabManager.LoadingMessage(err.ErrorMessage);
+        playfabManager.LoadingHide();
     }
 
     private void Success(RegisterPlayFabUserResult success)
     {
-        Debug.Log("Enregistrement Reussit");
-        Debug.Log("ID :"+ success.PlayFabId);
+      
+        playfabManager.LoadingMessage("Register Succefull");
+        playfabManager.LoadingHide();
     }
 
     // Update is called once per frame
-    void Update()
+    public void LoginPlayer()
     {
-        
+        playfabManager.LoadingMessage("Connecting server ...");
+        var request = new LoginWithEmailAddressRequest()
+        {
+            Password = ifPassword.text,
+            Email = ifEmail.text
+        };
+        PlayFabClientAPI.LoginWithEmailAddress(request, LoginSuccess, Loginfailled);
+
+
+
+    }
+
+    private void LoginSuccess(LoginResult succes)
+    {
+        playfabManager.LoadingMessage("Login SuccessFull");
+        playfabManager.Player_ID = succes.PlayFabId;
+        playfabManager.LoadingHide();
+    }
+
+    private void Loginfailled(PlayFabError err)
+    {
+        playfabManager.LoadingMessage(err.ErrorMessage);
+        playfabManager.LoadingHide();
     }
 }
