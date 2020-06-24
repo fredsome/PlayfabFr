@@ -65,6 +65,7 @@ public class AuthScritph : MonoBehaviour
         playfabManager.LoadingMessage("Login SuccessFull");
         playfabManager.Player_ID = succes.PlayFabId;
         playfabManager.LoadingHide();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
     private void Loginfailled(PlayFabError err)
