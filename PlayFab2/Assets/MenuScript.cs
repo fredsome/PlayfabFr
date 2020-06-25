@@ -15,4 +15,8 @@ public class MenuScript : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
+    public void LeaderBoard()
+    {
+        SceneManager.LoadScene("LeaderBoard");
+    }
 }

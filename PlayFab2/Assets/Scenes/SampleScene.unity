@@ -2473,7 +2473,7 @@ MonoBehaviour:
   Player_ID: 
   DisplayName: 
   Player_Score: 0
-  LoadingTimeOut: 3
+  LoadingTimeOut: 1
 --- !u!4 &1821917174
 Transform:
   m_ObjectHideFlags: 0
