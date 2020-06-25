@@ -18,9 +18,6 @@ public class CoinRotation : MonoBehaviour {
         uiGameSript.Coins += 1;
     }
 
-    public void Home() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
-    
-    }
+   
 
 }

@@ -209,7 +209,7 @@ Animator:
   m_GameObject: {fileID: 87452303}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bcd12bd9f5b2ead4e86631918416c65a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6f322f06e87175b4fa39ce73f677f5e1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1095,7 +1095,6 @@ GameObject:
   - component: {fileID: 878094994}
   - component: {fileID: 878094993}
   - component: {fileID: 878094992}
-  - component: {fileID: 878094997}
   - component: {fileID: 878094996}
   m_Layer: 5
   m_Name: CanvasLoading
@@ -1235,25 +1234,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &878094997
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878094991}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bcd12bd9f5b2ead4e86631918416c65a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2491,6 +2471,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player_ID: 
+  DisplayName: 
+  Player_Score: 0
   LoadingTimeOut: 3
 --- !u!4 &1821917174
 Transform:

@@ -45,17 +45,9 @@ public class CarControleur : MonoBehaviour
     {
         transform.Translate(Vector3.forward *Time.deltaTime * currentSpeed * Input.GetAxis("Vertical"));
         transform.Rotate(Vector3.up * Time.deltaTime * normalSpeed * 30 * Input.GetAxis("Horizontal"));
-        
     }
 
-    private void FixedUpdate()
-    {
-        if (canJump && Input.GetKeyDown("Jump")) {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * 200);
-        
-        
-        }
-    }
+  
 
 
 

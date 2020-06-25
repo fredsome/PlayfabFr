@@ -40,7 +40,29 @@ public class AuthScritph : MonoBehaviour
 
     private void Success(RegisterPlayFabUserResult success)
     {
-      
+
+        playfabManager.LoadingMessage("Initialize Stgatistics...");
+        InitStat();
+    }
+
+    private void InitStat() {
+        var request = new UpdatePlayerStatisticsRequest() { 
+        Statistics = new List<StatisticUpdate> { new StatisticUpdate {StatisticName="score", Value =0} }
+        
+        
+        };
+        PlayFabClientAPI.UpdatePlayerStatistics(request,InitStatSuccess,InitStatFailled);
+    
+    }
+
+    private void InitStatFailled(PlayFabError err)
+    {
+        playfabManager.LoadingMessage(err.ErrorMessage);
+        playfabManager.LoadingHide();
+    }
+
+    private void InitStatSuccess(UpdatePlayerStatisticsResult result)
+    {
         playfabManager.LoadingMessage("Register Succefull");
         playfabManager.LoadingHide();
     }
@@ -66,11 +88,55 @@ public class AuthScritph : MonoBehaviour
         playfabManager.Player_ID = succes.PlayFabId;
         playfabManager.LoadingHide();
         UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+        //Get Display
+        GetPlayerName();
+
     }
 
     private void Loginfailled(PlayFabError err)
     {
         playfabManager.LoadingMessage(err.ErrorMessage);
+        playfabManager.LoadingHide();
+    }
+
+    void GetPlayerName() {
+        playfabManager.LoadingMessage("Login Player DisplayName");
+        var request = new GetAccountInfoRequest();
+        PlayFabClientAPI.GetAccountInfo(request,InfoSucess,InfosFailled);
+    
+    
+    }
+
+    private void InfosFailled(PlayFabError err)
+    {
+        playfabManager.LoadingMessage(err.ErrorMessage);
+        playfabManager.LoadingHide();
+    }
+
+    private void InfoSucess(GetAccountInfoResult result)
+    {
+       playfabManager.DisplayName= result.AccountInfo.Username;
+        //read statistics
+        readStatScore();
+
+
+    }
+    private void readStatScore() {
+        playfabManager.LoadingMessage("Login Player Statistics");
+        var request = new GetPlayerStatisticsRequest();
+        PlayFabClientAPI.GetPlayerStatistics(request, suceesStats,failledstats);
+    }
+
+    private void failledstats(PlayFabError err)
+    {
+        playfabManager.LoadingMessage(err.ErrorMessage);
+        playfabManager.LoadingHide();
+    }
+
+    private void suceesStats(GetPlayerStatisticsResult result)
+    {
+        playfabManager.Player_Score = result.Statistics[0].Value;
+        playfabManager.LoadingMessage("Login stats successful");
         playfabManager.LoadingHide();
     }
 }
