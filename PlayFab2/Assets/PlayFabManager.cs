@@ -10,7 +10,7 @@ public class PlayFabManager : MonoBehaviour
     // Start is called before the first frame update
 
     public string Player_ID, DisplayName;
-    public int Player_Score;
+    public int Player_Score,Player_Coins;
     [SerializeField]
     int LoadingTimeOut = 3;
     void Awake()

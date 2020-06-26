@@ -87,7 +87,7 @@ public class AuthScritph : MonoBehaviour
         playfabManager.LoadingMessage("Login SuccessFull");
         playfabManager.Player_ID = succes.PlayFabId;
         playfabManager.LoadingHide();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+    
         //Get Display
         GetPlayerName();
 
@@ -138,5 +138,33 @@ public class AuthScritph : MonoBehaviour
         playfabManager.Player_Score = result.Statistics[0].Value;
         playfabManager.LoadingMessage("Login stats successful");
         playfabManager.LoadingHide();
+        getBalance();
+    }
+
+
+    void getBalance(){
+        var request = new GetUserInventoryRequest();
+        PlayFabClientAPI.GetUserInventory(request,Inventorysuccess,InventoryFailled);
+    
+    }
+
+    private void InventoryFailled(PlayFabError err)
+    {
+        playfabManager.LoadingMessage(err.ErrorMessage);
+        playfabManager.LoadingHide();
+    }
+
+    private void Inventorysuccess(GetUserInventoryResult result)
+    {
+        foreach (var item in result.VirtualCurrency) {
+            if (item.Key == "CO") {
+                playfabManager.Player_Coins = item.Value;
+            
+            }
+        
+        }
+        playfabManager.LoadingMessage("Loading successfull");
+        playfabManager.LoadingHide();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 }

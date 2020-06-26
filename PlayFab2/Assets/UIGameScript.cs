@@ -8,7 +8,7 @@ using System;
 
 public class UIGameScript : MonoBehaviour
 {
-
+    private int initCoins;
     [SerializeField] Text textCoins, textScore;
     PlayFabManager playfabManager;
     // Start is called before the first frame update
@@ -42,14 +42,17 @@ public class UIGameScript : MonoBehaviour
     {
         playfabManager = GameObject.Find("PlayFabManager").GetComponent<PlayFabManager>();
         Score = playfabManager.Player_Score;
+        Coins = playfabManager.Player_Coins;
     }
     private void UpdatePlayFabManagerInfo() {
         playfabManager.Player_Score = Score;
-    
+        playfabManager.Player_Coins = Coins;
     }
+
+    //Update score
     public void Home()
     {
-        //Update score
+      
         playfabManager.LoadingMessage("Updating Data...");
         UpdatePlayFabManagerInfo();
         var request = new UpdatePlayerStatisticsRequest{
@@ -72,10 +75,31 @@ public class UIGameScript : MonoBehaviour
         playfabManager.LoadingHide();
 
     }
+ 
 
     private void sucessUpdate(UpdatePlayerStatisticsResult result)
     {
         playfabManager.LoadingHide();
+        UpdateCoins();
+       
+    }
+
+
+    //Piece
+    void UpdateCoins()
+    {
+        var request = new AddUserVirtualCurrencyRequest() { VirtualCurrency = "CO", Amount = Coins - initCoins };
+        PlayFabClientAPI.AddUserVirtualCurrency(request, CurrencySucess, CurrencyFailled);
+    }
+
+    private void CurrencyFailled(PlayFabError err)
+    {
+        playfabManager.LoadingMessage(err.ErrorMessage);
+        playfabManager.LoadingHide();
+    }
+
+    private void CurrencySucess(ModifyUserVirtualCurrencyResult succes)
+    {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 }
